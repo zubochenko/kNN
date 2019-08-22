@@ -51,17 +51,17 @@ def kNN(train, test, k, distance):
         return diction[0][0]
     
     return classFinder(getter(train, test, k))
-kNN (iris.values, iris.values[52][:4], 3, 'euclid')
+kNN (iris.values[:100], iris.values[52][:4], 1, 'euclid')
 
 prediction = []
-def getAccuracy(test, prediction, distance):
+def getAccuracy(test, prediction, k, distance):
     
-    def answers(test, prediction):
+    def answers(test, prediction, k):
         for x in range(len(test)):
-            res = kNN(iris.values, iris.values[x][:4], 3, distance)
+            res = kNN(iris.values, iris.values[x][:4], k, distance)
             prediction.append(res)
         return prediction
-    answers(iris.values, prediction)
+    answers(iris.values, prediction, k)
 
     def getpercent(test, predictions):
         correctAnswer = 0
@@ -70,6 +70,6 @@ def getAccuracy(test, prediction, distance):
                 correctAnswer += 1
         return (correctAnswer/float(len(test))) * 100.0
     
-    return getpercent(test, answers(test, prediction))
+    return getpercent(test, answers(test, prediction, k))
 
-print (getAccuracy(iris.values, prediction, 'manhattan'))
+print (getAccuracy(iris.values, prediction, 3, 'manhattan'))
